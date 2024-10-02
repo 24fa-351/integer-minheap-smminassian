@@ -6,7 +6,14 @@
 
 #define KEY_NOT_PRESENT -1
 
+//constructor. I am establishing the relationship between both structs. Why? Because if i dont then whats the point of putting two structs.
 heap_t *heap_create(int capacity) {
+    heap_t *heap = (heap_t*)malloc(sizeof(heap_t));
+    heap->data = (heap_node_t*)malloc(sizeof(heap_node_t)* capacity);
+    heap->capacity = capacity; //establish a relationship. Capacity is how much the array can hold
+    heap->size = 0;  //This is used to determine what level a individual node is on. 
+
+    return heap;
 }
 
 void heap_free(heap_t *heap) {
@@ -34,6 +41,11 @@ void heap_swap(heap_t *heap, int index1, int index2) {
 }
 
 void heap_bubble_up(heap_t *heap, int index) {
+    int parentIndex = (heap_size(heap) - 1)/ 2;
+    index = heap_size(heap) - 1;
+    while(index > 0 && heap->data[index/2] > ){
+
+    }
 }
 
 void heap_bubble_down(heap_t *heap, int index) {
