@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "heap.h"
+#include "asst6.c"
 
 #define KEY_NOT_PRESENT -1
 
