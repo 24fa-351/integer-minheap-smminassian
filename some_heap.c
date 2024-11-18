@@ -18,13 +18,21 @@ heap_t *heap_create(int capacity) {
 }
 
 void heap_free(heap_t *heap) {
+    if(heap != NULL){
+        if(heap->data != NULL){
+            free(heap->data);
+        } 
+        free(heap);
+    }
 }
 
 unsigned int heap_size(heap_t *heap) { return heap->size; }
 
-unsigned int heap_parent(unsigned int index) {  }
+unsigned int heap_parent(unsigned int index) { return (index - 1) / 2;}
 
-unsigned int heap_left_child(unsigned int index) { }
+unsigned int heap_left_child(heap_t *heap, unsigned int index) {
+    if(heap->data[parent])
+}
 
 unsigned int heap_right_child(unsigned int index) {  }
 
@@ -42,8 +50,6 @@ void heap_swap(heap_t *heap, int index1, int index2) {
 }
 
 void heap_bubble_up(heap_t *heap, int index) {
-    int parentIndex = (heap_size(heap) - 1)/ 2;
-    index = heap_size(heap) - 1;
     while(index > 0 && heap->data[index/2] > ){
 
     }
