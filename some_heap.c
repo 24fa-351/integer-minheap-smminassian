@@ -3,22 +3,41 @@
 #include <stdlib.h>
 
 #include "heap.h"
+#include "asst6.c"
 
 #define KEY_NOT_PRESENT -1
 
+//constructor. I am establishing the relationship between both structs. Why? Because if i dont then whats the point of putting two structs.
 heap_t *heap_create(int capacity) {
+    heap_t *heap = (heap_t*)malloc(sizeof(heap_t));
+    heap->data = (heap_node_t*)malloc(sizeof(heap_node_t)* capacity);
+    heap->capacity = capacity; //establish a relationship. Capacity is how much the array can hold
+    heap->size = 0;  //This is used to determine what level a individual node is on. 
+
+    return heap;
 }
 
 void heap_free(heap_t *heap) {
+    if(heap != NULL){
+        if(heap->data != NULL){
+            free(heap->data);
+        } 
+        free(heap);
+    }
 }
 
 unsigned int heap_size(heap_t *heap) { return heap->size; }
 
-unsigned int heap_parent(unsigned int index) {  }
+unsigned int heap_parent(unsigned int index) { 
+    if(index == 0){
+        return -1;
+    }
+    return (index - 1) / 2;
+    }
 
-unsigned int heap_left_child(unsigned int index) { }
+unsigned int heap_left_child(unsigned int index) { return 2 * index + 1; }
 
-unsigned int heap_right_child(unsigned int index) {  }
+unsigned int heap_right_child(unsigned int index) {return 2 * index + 2; }
 
 unsigned int heap_level(unsigned int index) {}
 
@@ -30,10 +49,26 @@ void heap_print(heap_t *heap) {
     printf("\n");
 }
 
-void heap_swap(heap_t *heap, int index1, int index2) {
+void heap_swap(heap_t *heap, int index1, int index2, unsigned int index) {
+    index1 = heap_left_child(index);
+    index2 = heap_right_child(index);
+    int parent = heap_parent(index);
+
+    if(index1 < 0){
+        index1 = -1;
+    }
+    else if(index2 < 0){
+        index2 = -1;
+    }
+
+    if(index1 != -1 && heap->data[index1] < heap->data[parent])
 }
 
 void heap_bubble_up(heap_t *heap, int index) {
+    
+    while(index > 0 && heap->data[index/2] > ){
+
+    }
 }
 
 void heap_bubble_down(heap_t *heap, int index) {
