@@ -8,7 +8,6 @@
 
 #define KEY_NOT_PRESENT -1
 
-    heap->capacity = capacity; //establish a relationship. Capacity is how much the array can hold
 // constructor. I am establishing the relationship between both structs. Why? Because if i dont then whats the point of putting two structs.
 heap_t *heap_create(int capacity)
 {
