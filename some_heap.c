@@ -21,38 +21,39 @@ heap_t *heap_create(int capacity)
 
 void heap_free(heap_t *heap)
 {
-    if (heap != NULL)
+    if (heap != NULL) 
     {
-        if (heap->data != NULL)
+        if (heap->data != NULL) 
         {
-            free(heap->data);
+            free(heap->data); 
         }
         free(heap);
     }
 }
 
-unsigned int heap_size(heap_t *heap) { return heap->size; }
+unsigned int heap_size(heap_t *heap) { return heap->size; } 
 
-unsigned int heap_parent(unsigned int index)
+unsigned int heap_parent(unsigned int index) // to calculate parent node
 {
     if (index == 0)
     {
         return 0;
     }
-    return (index - 1) / 2;
+    return (index - 1) / 2; // where the parent will be if it is not at root
 }
 
 unsigned int heap_left_child(unsigned int index) { return 2 * index + 1; }
 
 unsigned int heap_right_child(unsigned int index) { return 2 * index + 2; }
 
-unsigned int heap_level(unsigned int index)
+unsigned int heap_level(unsigned int index) // what level a node is on in the tree
 {
     if (index == 0)
     {
         return 0;
     }
-    return (unsigned int)log2(index + 1);
+    return (unsigned int)log2(index + 1); // if I just put index+1, then the level would surpass the size of the tree. So i have to narrow it down by finding the log of index+1. So if index = 3, its logbase2 of 4 which is 2, so we are on level 2.
+    // We wont go over the heap size because we are values are always less than the heap size.
 }
 
 void heap_print(heap_t *heap)
@@ -67,9 +68,9 @@ void heap_print(heap_t *heap)
 
 void heap_swap(heap_t *heap, int index1, int index2)
 {
-    heap_node_t parent = heap->data[index1];
-    heap->data[index1] = heap->data[index2];
-    heap->data[index2] = parent;
+    heap_node_t parent = heap->data[index1]; //parent is the index before swap
+    heap->data[index1] = heap->data[index2]; //index1 is replaced with the value that I want to move up
+    heap->data[index2] = parent; //index2 is replaced with index1 before swap
 }
 
 void heap_bubble_up(heap_t *heap, int index)
@@ -77,30 +78,31 @@ void heap_bubble_up(heap_t *heap, int index)
     while (index > 0)
     {
         int parent = heap_parent(index);
-        if (heap->data[index].key < heap->data[parent].key)
+        if (heap->data[index].key < heap->data[parent].key) //if key(value inside node) of index is less than value of key in parent
         {
-            heap_swap(heap, index, parent);
-            index = parent;
+            heap_swap(heap, index, parent); //swap them
+            index = parent; //let the index be the new parent
         }
         else
         {
-            break;
+            break; // once the minimum val reaches its place, we stop
         }
     }
 }
 
 void heap_bubble_down(heap_t *heap, int index)
 {
-    while (true)
+    while (true) // I will run this infinitly, you will see why below
     {
         int left = heap_left_child(index);
         int right = heap_right_child(index);
         int parent = heap_parent(index);
 
-        if (heap->data[left].key < heap->data[parent].key)
+        if (heap->data[left].key < heap->data[parent].key) //if the left child is less than the parent
         {
-            heap_swap(heap, left, parent);
-            if (left >= heap->size)
+            heap_swap(heap, left, parent); //swap them
+            if (left >= heap->size) //if the left node has no children then we stop
+            //i think there is a bug here with size, i will look at it tomorrow
             {
                 break;
             }
