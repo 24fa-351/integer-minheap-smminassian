@@ -33,7 +33,7 @@ void heap_free(heap_t *heap)
 
 unsigned int heap_size(heap_t *heap) { return heap->size; } 
 
-unsigned int heap_parent(unsigned int index) // to calculate parent node
+unsigned int heap_parent(unsigned int index) 
 {
     if (index == 0)
     {
@@ -46,7 +46,7 @@ unsigned int heap_left_child(unsigned int index) { return 2 * index + 1; }
 
 unsigned int heap_right_child(unsigned int index) { return 2 * index + 2; }
 
-unsigned int heap_level(unsigned int index) // what level a node is on in the tree
+unsigned int heap_level(unsigned int index)
 {
     if (index == 0)
     {
@@ -58,11 +58,13 @@ unsigned int heap_level(unsigned int index) // what level a node is on in the tr
 
 void heap_print(heap_t *heap)
 {
+    
     for (int ix = 0; ix < heap_size(heap); ix++)
     {
         printf("%3d - %3d : " HEAP_KEY_FORMAT "\n", heap_level(ix), ix,
                heap->data[ix].key);
     }
+    
     printf("\n");
 }
 
@@ -96,24 +98,20 @@ void heap_bubble_down(heap_t *heap, int index)
     {
         int left = heap_left_child(index);
         int right = heap_right_child(index);
-        int parent = heap_parent(index);
+        int min = index;
 
-        if (heap->data[left].key < heap->data[parent].key) //if the left child is less than the parent
+        if (heap->data[left].key < heap->data[min].key) //if the left child is less than the root
         {
-            heap_swap(heap, left, parent); //swap them
-            if (left >= heap->size) //if the left node has no children then we stop
-            //i think there is a bug here with size, i will look at it tomorrow
-            {
-                break;
-            }
+            heap_swap(heap, left, min); //swap them
         }
-        else if (heap->data[right].key < heap->data[parent].key)
+           
+        else if (heap->data[right].key < heap->data[min].key) //if the right child is less than the root 
         {
-            heap_swap(heap, right, parent);
-            if (right >= heap->size)
-            {
-                break;
-            }
+            heap_swap(heap, right, min);//swap them
+           
+        }
+        else if(min == index){ //if the current node is already the smallest, we stop because the smallest is at root.
+            break; 
         }
     }
 }
@@ -147,7 +145,7 @@ heap_value_t heap_remove_min(heap_t *heap)
     heap->data[0] = heap->data[heap_size(heap)];
 
     // then bubble it down to its correct position
-    heap_bubble_down(heap, 0);
+    heap_bubble_down(heap, 0); 
 
     return min;
 }
